@@ -1,0 +1,26 @@
+services:
+  client:
+    build:
+      context: ./shiftx-client
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    depends_on:
+      - server
+    networks:
+      - shiftx-network
+
+  server:
+    build:
+      context: ./shiftx-server
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    env_file:
+      - ./shiftx-server/.env
+    networks:
+      - shiftx-network
+
+networks:
+  shiftx-network:
+    driver: bridge
